@@ -1,22 +1,28 @@
 #include <stdio.h>
 
 int main(void) {
-    FILE *fp;              
-    char word[50];      
-    int i;
+    FILE *fp = NULL;
+    char c;
+    char str[100];
 
-    fp = fopen("sample.txt", "w");  
+    fp = fopen("sample.txt", "r");
     if (fp == NULL) {
         printf("File open error!\n");
         return 1;
     }
 
-    for (i = 0; i < 3; i++) {
-        printf("input a word: ");
-        scanf("%s", word);
-        fprintf(fp, "%s\n", word); 
+    printf("---- Read character by character ----\n");
+    while ((c = fgetc(fp)) != EOF) {
+        putchar(c);
     }
 
-    fclose(fp); 
+    rewind(fp);
+
+    printf("\n---- Read line by line ----\n");
+    while (fgets(str, sizeof(str), fp) != NULL) {
+        printf("%s", str);
+    }
+
+    fclose(fp);
     return 0;
 }
